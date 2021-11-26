@@ -1,0 +1,48 @@
+{% extends 'master.html' %}
+{% block body %}
+
+<div class="container">
+<div class="features_items"><!--features_items-->
+    <h2 class="title text-center">Search Results</h2>
+    {% if product|length < 1 %}
+
+    <div class="content-404">
+        <img src="images/404/404.png" class="img-responsive" alt="" />
+        <h1><b>OPPS!</b> We Couldn’t Find this Product</h1>
+        <p>Uh... So it looks like you brock something. The page you are looking for has up and Vanished.</p>
+        <h2><a href="{% url 'index' %}">Bring me back Home</a></h2>
+    </div>
+
+    {% endif %}
+
+    {% for prod in product %}
+    <div class="col-sm-4">
+        <div class="product-image-wrapper">
+            <div class="single-products">
+                    <div class="productinfo text-center">
+                        <img src="/{{ prod.image }}" alt="" height="275px" />
+                        <h2>${{ prod.price }}</h2>
+                        <p>{{ prod.name }}</p>
+                        <a href="{% url 'cart_add' prod.id %}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                    </div>
+                    <div class="product-overlay">
+                        <div class="overlay-content">
+                            <h2>${{ prod.price }}</h2>
+                            <p>{{ prod.name }}</p>
+                            <a href="{% url 'cart_add' prod.id %}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                        </div>
+                    </div>
+            </div>								
+            <div class="choose">
+                <ul class="nav nav-pills nav-justified">
+                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+</div><!--features_items-->
+</div>
+{% endblock %}

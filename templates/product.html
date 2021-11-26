@@ -1,0 +1,110 @@
+{% extends 'master.html' %}
+{% block body %}
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="left-sidebar">
+                    <h2>Category</h2>
+                    <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+                        
+                        {% for cat in category %}
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordian" href="#{{ cat.id }}">
+                                        <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                        {{ cat.name }}
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="{{ cat.id }}" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <ul>
+                                     {% for i in cat.sub_category_set.all %}   {% comment %} although it's Sub_Category but we've to 
+                                                                                 write "sub_category" in small letter here, otherwise it won't work {% endcomment %}
+                                        <li><a href="/product/?category={{i.id}}">{{ i.name }} </a></li>
+                                        
+                                    {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+    
+                    {% endfor %}
+
+                    </div><!--/category-productsr-->
+                
+                    <div class="brands_products"><!--brands_products-->
+                        <h2>Brands</h2>
+                        <div class="brands-name">
+                            <ul class="nav nav-pills nav-stacked">
+                            {% for i in brand %}
+                                <li><a href="/product/?brand={{i.id}}"> <span class="pull-right">(50)</span>{{ i.name }}</a></li>
+                            {% endfor %}
+                                </ul>
+                        </div>
+                    </div><!--/brands_products-->
+                    
+                    <div class="price-range"><!--price-range-->
+                        <h2>Price Range</h2>
+                        <div class="well">
+                             <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="sl2" ><br />
+                             <b>$ 0</b> <b class="pull-right">$ 600</b>
+                        </div>
+                    </div><!--/price-range-->
+                    
+                    <div class="shipping text-center"><!--shipping-->
+                        <img src="images/home/shipping.jpg" alt="" />
+                    </div><!--/shipping-->
+                    
+                </div>
+            </div>
+            
+            <div class="col-sm-9 padding-right">
+                <div class="features_items"><!--features_items-->
+                    <h2 class="title text-center">Features Items</h2>
+
+                    {% for prod in product %}
+						<div class="col-sm-4">
+							<div class="product-image-wrapper">
+								<div class="single-products">
+										<div class="productinfo text-center">
+											<img src="/{{ prod.image }}" alt="" height="275px" />
+											<h2>${{ prod.price }}</h2>
+											<p>{{ prod.name }}</p>
+											<a href="{% url 'cart_add' prod.id %}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+										</div>
+										<div class="product-overlay">
+											<div class="overlay-content">
+												<h2>${{ prod.price }}</h2>
+												<p>{{ prod.name }}</p>
+												<a href="{% url 'cart_add' prod.id %}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											</div>
+										</div>
+								</div>								
+								<div class="choose">
+									<ul class="nav nav-pills nav-justified">
+										<li><a href="{{prod.id}}"><i class="fa fa-plus-square"></i>View Product</a></li>
+										
+									</ul>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+
+                   <ul class="pagination">
+                        <li class="active"><a href="">1</a></li>
+                        <li><a href="">2</a></li>
+                        <li><a href="">3</a></li>
+                        <li><a href="">&raquo;</a></li>
+                    </ul>
+                </div><!--features_items-->
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
